@@ -2,6 +2,7 @@
 
 # generate jupyter config file
 
+su bidou
 cd /home/bidou
 jupyter notebook --generate-config
 wget https://raw.githubusercontent.com/gversmee/bidou/master/jupyter_notebook_config.py -O /home/bidou/.jupyter/jupyter_notebook_config.py
