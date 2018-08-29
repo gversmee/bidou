@@ -22,7 +22,7 @@ cluster.status j-XXXXXXXXXXXXX
 ```
 
 ### Step 4: Connect to your new cluster
-Run the following command to get the URL address of your cluster (remove the quotes if necessary). This will open a Jupyter Lab with already some tutorials that you can play with. For the moment, you will need a password to connect to your cluster, that will be provided by the administrator. We plan to simplify the authentication process soon.
+Run the following command to get the URL address of your cluster. This will open a Jupyter Lab with already some tutorials that you can play with. For the moment, you will need a password to connect to your cluster, that will be provided by the administrator. We plan to simplify the authentication process soon.
 Be careful, if you want to run Hail tutorials, make sure to select a "Hail" kernel.
 
 
