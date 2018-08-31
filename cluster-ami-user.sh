@@ -28,6 +28,8 @@ source deactivate
 mkdir /home/bidou/hail_tuto
 mv /opt/hail/python/hail/docs/tutorials/* /home/bidou/hail_tuto
 
+usermod -aG hadoop bidou
+
 # generate jupyter config file
 su bidou
 source /etc/profile
