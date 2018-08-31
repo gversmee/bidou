@@ -3,6 +3,7 @@
 source /etc/profile
 
 #install Hail
+JAVA_HOME=''
 git clone https://github.com/broadinstitute/hail.git /opt/hail
 cd /opt/hail
 ./gradlew -Dspark.version=2.2.0 shadowJar archiveZip
