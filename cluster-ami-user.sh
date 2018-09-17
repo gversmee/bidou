@@ -29,6 +29,7 @@ mkdir /home/bidou/hail_tuto
 mv /opt/hail/python/hail/docs/tutorials/* /home/bidou/hail_tuto
 
 usermod -aG hadoop bidou
+chown bidou -R /home/bidou
 
 # generate jupyter config file
 su bidou

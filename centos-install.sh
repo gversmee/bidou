@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-yum upgrade -y
+yum update -y
 yum install wget net-tools lsof bash-completion vim docker bzip2 firewalld xauth deltarpm bzip2-devel zlib-devel xz-devel -y
 yum clean all -y
 
@@ -20,9 +20,15 @@ chmod +x /etc/profile.d/cluster_functions.sh
 source /etc/profile
 
 # install conda packages
-conda config --append channels conda-forge --append channels r --append channels bioconda --append channels cyclus --append channels blaze --append channels pytorch
-conda install keras tensorflow pytorch r r-lme4 r-devtools r-reticulate htop bcftools samtools plink htslib sra-tools r-irkernel sas_kernel git nano curl ipykernel wget tar unzip pyhamcrest java-jdk jupyterlab nodejs r-essentials xorg-libxrender jupyterhub -y
-conda install -c conda-forge ncurses -y
+conda install mro-base r-essentials sas_kernel git ipykernel wget nodejs nbconvert -y
+conda install -c pytorch pytorch -y
+conda install -c cyclus java-jdk -y
+conda install -c bioconda bcftools samtools plink htslib sra-tools perl-digest-md5 -y
+conda install -c r r-devtools r-hmisc r-rlist r-rcurl r-xml -y
+conda install -c conda-forge r-lme4 ncurses keras tensorflow htop tar unzip pyhamcrest jupyterlab xorg-libxrender jupyterhub -y
+conda update --all -y
+
+echo 'httr::set_config(httr::config(ssl_verifypeer = 0L, ssl_verifyhost = 0L, ssl_verifystatus  = 0L))' >> /opt/anaconda3/lib/R/etc/Rprofile.site
 
 # install jupyter
 # generate ssl certificate
@@ -37,7 +43,7 @@ jupyterhub --generate-config
 cd ~
 wget https://raw.githubusercontent.com/gversmee/bidou/master/jupyterhub_config.py -O /etc/jupyterhub/jupyterhub_config.py
 
-#install R , SAS and bash kernel
+#install bash kernel
 pip install --upgrade pip
 pip install msgpack
 pip install bash_kernel
@@ -57,7 +63,7 @@ jupyter labextension install @jupyterlab/hub-extension
 
 #install rstudio server
 wget https://download2.rstudio.org/rstudio-server-rhel-1.1.456-x86_64.rpm
-yum install rstudio-server-rhel-1.1.456-x86_64.rpm
+yum install rstudio-server-rhel-1.1.456-x86_64.rpm -y
 sh -c 'echo "rsession-which-r=/opt/anaconda3/bin/R" >> /etc/rstudio/rserver.conf'
 rstudio-server start
 
