@@ -5,12 +5,12 @@ source /etc/profile
 #install Hail
 JAVA_HOME=''
 git clone https://github.com/broadinstitute/hail.git /opt/hail
-cd /opt/hail
+cd /opt/hail/hail
 ./gradlew -Dspark.version=2.2.0 shadowJar archiveZip
 ln -s /usr/lib/spark /opt/spark
 PROFHAIL=/etc/profile.d/hail.sh
 echo 'export SPARK_HOME=/opt/spark' > $PROFHAIL
-echo 'export HAIL_HOME=/opt/hail' >> $PROFHAIL
+echo 'export HAIL_HOME=/opt/hail/hail' >> $PROFHAIL
 echo 'export PYTHONPATH="${PYTHONPATH:+$PYTHONPATH:}$HAIL_HOME/build/distributions/hail-python.zip"' >> $PROFHAIL
 echo 'export PYTHONPATH="$PYTHONPATH:$SPARK_HOME/python"' >> $PROFHAIL
 echo 'export PYTHONPATH="$PYTHONPATH:$SPARK_HOME/python/lib/py4j-*-src.zip"' >> $PROFHAIL

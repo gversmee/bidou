@@ -11,7 +11,8 @@ chmod +x Anaconda3-5.2.0-Linux-x86_64.sh
 rm -f Anaconda3-5.2.0-Linux-x86_64.sh
 
 ## put the bin path for everybody
-echo 'pathmunge /opt/anaconda3/bin' > /etc/profile.d/anaconda3.sh
+echo 'export PATH=/opt/anaconda3/bin:$PATH' > /etc/profile.d/anaconda3.sh
+echo 'export PATH=$PATH:/usr/local/texlive/2018/bin/x86_64-linux' >> /etc/profile.d/anaconda3.sh
 chmod +x /etc/profile.d/anaconda3.sh
 
 ## install the cluster functions
@@ -20,13 +21,16 @@ chmod +x /etc/profile.d/cluster_functions.sh
 source /etc/profile
 
 # install conda packages
+conda config --append channels conda-forge --append channels r --append channels bioconda --append channels cyclus --append channels blaze --append channels pytorch
+conda install mro-base r-essentials sas_kernel git ipykernel wget nodejs nbconvert pytorch java-jdk bcftools samtools plink htslib sra-tools perl-digest-md5 r-devtools r-hmisc r-rlist r-rcurl r-xml r-lme4 keras tensorflow htop tar unzip pyhamcrest jupyterlab xorg-libxrender jupyterhub -y
+
+
 conda install mro-base r-essentials sas_kernel git ipykernel wget nodejs nbconvert -y
 conda install -c pytorch pytorch -y
 conda install -c cyclus java-jdk -y
 conda install -c bioconda bcftools samtools plink htslib sra-tools perl-digest-md5 -y
 conda install -c r r-devtools r-hmisc r-rlist r-rcurl r-xml -y
-conda install -c conda-forge r-lme4 ncurses keras tensorflow htop tar unzip pyhamcrest jupyterlab xorg-libxrender jupyterhub -y
-conda update --all -y
+conda install -c conda-forge r-lme4 keras tensorflow htop tar unzip pyhamcrest jupyterlab xorg-libxrender jupyterhub -y
 
 echo 'httr::set_config(httr::config(ssl_verifypeer = 0L, ssl_verifyhost = 0L, ssl_verifystatus  = 0L))' >> /opt/anaconda3/lib/R/etc/Rprofile.site
 
@@ -55,6 +59,9 @@ source activate python2
 /opt/anaconda3/envs/python2/bin/python -m ipykernel install --prefix=/usr/local --name 'Python2'
 source deactivate
 
+#install oauthenticator
+pip3 install oauthenticator
+
 #install jupterlab-hub extension
 jupyter labextension install @jupyterlab/hub-extension
 
@@ -64,8 +71,19 @@ jupyter labextension install @jupyterlab/hub-extension
 #install rstudio server
 wget https://download2.rstudio.org/rstudio-server-rhel-1.1.456-x86_64.rpm
 yum install rstudio-server-rhel-1.1.456-x86_64.rpm -y
+rm -rf rstudio-server-rhel-1.1.456-x86_64.rpm
 sh -c 'echo "rsession-which-r=/opt/anaconda3/bin/R" >> /etc/rstudio/rserver.conf'
 rstudio-server start
+
+#install latex
+wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+tar -xzf install-tl-unx.tar.gz
+rm -rf install-tl-unx.tar.gz
+cd install-tl-20180917
+wget https://github.com/gversmee/bidou/raw/master/TeXLive.zip
+unzip TeXLive.zip
+rm -rf TeXLive.zip
+./install-tl -profile TeXLive
 
 # change permission for opt / etc and srv
 chgrp wheel -R /opt
